@@ -1,5 +1,6 @@
 package ru.anura.factorial
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,24 +43,25 @@ class MainViewModel : ViewModel() {
     }
 
     //Если не можем поменять функцию на suspend, то можно использовать этот вариант
-    private fun factorial(number: Long): String {
-        var result = BigInteger.ONE
-        for (i in 1..number) {
-            result = result.multiply(BigInteger.valueOf(i))
-        }
-        return result.toString()
-    }
+//    private fun factorial(number: Long): String {
+//        var result = BigInteger.ONE
+//        for (i in 1..number) {
+//            result = result.multiply(BigInteger.valueOf(i))
+//        }
+//        return result.toString()
+//    }
 
     //первый способ
-//    private suspend fun factorial(number: Long): String {
-//        return withContext(Dispatchers.Default){
-//            var result = BigInteger.ONE
-//            for (i in 1..number) {
-//                result = result.multiply(BigInteger.valueOf(i))
-//            }
-//            result.toString()
-//        }
-//}
+    private suspend fun factorial(number: Long): String {
+        return withContext(Dispatchers.Default){
+            var result = BigInteger.ONE
+            for (i in 1..number) {
+                result = result.multiply(BigInteger.valueOf(i))
+                Log.d("MyTag", "$i")
+            }
+            result.toString()
+        }
+}
 
 
 //второй способ
